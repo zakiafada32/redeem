@@ -1,0 +1,105 @@
+.form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+}
+
+.form input {
+  width: 90%;
+  margin-bottom: 10px;
+  height: 40px;
+  border-radius: 15px;
+  border-color: #fb0010;
+  font-size: 1em;
+  text-align: center;
+}
+
+.form input:focus {
+  outline: none;
+}
+
+.form label {
+  font-size: 1.2em;
+  font-weight: 600;
+  line-height: 2em;
+}
+
+.form code {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form button {
+  margin-top: 10px;
+  width: 150px;
+  height: 40px;
+  background: #fb0010;
+  text-align: center;
+  border-radius: 15px;
+  color: white;
+  font-weight: 600;
+  border-color: white;
+  font-size: 1em;
+}
+
+.summary {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+}
+
+.summary h1 {
+  font-size: 1.2em;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.summary .desc {
+  font-size: 0.9em;
+  text-align: left;
+}
+
+.summary .desc h3 {
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.summary code {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #fb0010;
+  font-weight: 600;
+  text-align: center;
+}
+
+.summary table {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 0.8em;
+}
+
+.summary table td {
+  padding-right: 10px;
+}
+
+.summary a {
+  margin-top: 20px;
+  width: 150px;
+  height: 40px;
+  background: #fb0010;
+  text-align: center;
+  border-radius: 15px;
+  color: white;
+  font-weight: 600;
+  border-color: white;
+  font-size: 1em;
+  line-height: 2.2em;
+}

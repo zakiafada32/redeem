@@ -1,0 +1,30 @@
+.error {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error h1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.error h3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.error a {
+  margin-top: 10px;
+  width: 200px;
+  height: 45px;
+  background: #fb0010;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  line-height: 25px;
+}
