@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { Layout, Unexpected } from '../component';
+import { Layout } from '../component';
 import { auth, inquiry, checkout, ResponseCode as RC } from '../libs';
 
 import type { FormEventHandler } from 'react';
@@ -85,10 +85,6 @@ const Redeem: NextPage<{ token: Token }> = ({ token }) => {
     }
   };
 
-  if (!token || token === '') {
-    return <Unexpected />;
-  }
-
   return (
     <Layout>
       <header style={{ marginBottom: '40px' }}>
@@ -150,12 +146,17 @@ const Redeem: NextPage<{ token: Token }> = ({ token }) => {
 
 export const getStaticProps: GetStaticProps<{ token: Token }> = async context => {
   const token = await auth();
+  if (!token || token === '') {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
       token,
     },
-    revalidate: 10,
+    revalidate: 12 * 60 * 60, // revalidate every 12 hours (h * m * s)
   };
 };
 
