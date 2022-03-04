@@ -6,7 +6,7 @@ import { auth, inquiry, checkout, ResponseCode as RC } from '../libs';
 
 import type { FormEventHandler } from 'react';
 import type { GetStaticProps, NextPage } from 'next';
-import type { Token, Summary } from '../libs';
+import type { Token, Summary, CheckoutParams } from '../libs';
 
 import styles from '../styles/Redeem.module.css';
 
@@ -29,7 +29,7 @@ const Redeem: NextPage<{ token: Token }> = ({ token }) => {
 
       switch (inquiryResult.result.data.status.code) {
         case RC.RC00:
-          const checkoutResult = await checkout(token, {
+          const checkoutParams: CheckoutParams = {
             payment_code: paymentCode,
             reference_no: inquiryResult.result.data.reference_no,
             sender_name: name,
@@ -37,7 +37,9 @@ const Redeem: NextPage<{ token: Token }> = ({ token }) => {
             email: email,
             phone_number: inquiryResult.result.data.data?.phone!,
             expiration: inquiryResult.result.data.data?.expiry_time!,
-          });
+          };
+
+          const checkoutResult = await checkout(token, checkoutParams);
 
           if (checkoutResult.code !== 200) {
             throw new Error('Terjadi kesalahan, tolong dicoba lagi');
