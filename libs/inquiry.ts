@@ -60,15 +60,15 @@ export const inquiry = async (token: string, paymentCode: string): Promise<Inqui
       code: 400,
       result: {
         status: false,
-        message: 'Terjadi kesalahan. Tolong dicoba lagi',
+        message: 'inquiry failed',
         data: {
           status: {
             code: 'RC99',
-            message: 'Terjadi kesalahan. Tolong dicoba lagi',
+            message: 'inquiry failed',
           },
           product: {
-            code: 'TSELVASOC',
-            label: 'VAS Omni Channel',
+            code: '',
+            label: '',
             price: 0,
           },
           reference_no: '',

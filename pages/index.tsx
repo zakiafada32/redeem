@@ -1,9 +1,12 @@
-import type { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
-import { FormEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Layout, Unexpected } from '../component';
-import { auth, Token, inquiry, checkout, Summary, ResponseCode as RC } from '../libs';
+import { auth, inquiry, checkout, ResponseCode as RC } from '../libs';
+
+import type { FormEventHandler } from 'react';
+import type { GetStaticProps, NextPage } from 'next';
+import type { Token, Summary } from '../libs';
 
 import styles from '../styles/Redeem.module.css';
 
@@ -37,7 +40,7 @@ const Redeem: NextPage<{ token: Token }> = ({ token }) => {
           });
 
           if (checkoutResult.code !== 200) {
-            throw new Error('checkout failed');
+            throw new Error('Terjadi kesalahan, tolong dicoba lagi');
           }
 
           if (!checkoutResult.result?.payment_link || checkoutResult.result.payment_link === '') {
@@ -54,41 +57,22 @@ const Redeem: NextPage<{ token: Token }> = ({ token }) => {
           });
           setStep(1);
 
-          toast.update(toastId, { autoClose: 2000, type: 'success', render: 'success' });
+          toast.update(toastId, { autoClose: 2000, type: 'success', render: 'Sukses' });
           break;
 
         case RC.RC50:
-          toast.update(toastId, {
-            autoClose: 5000,
-            type: 'error',
-            render: 'Kode bayar sudah terpakai',
-          });
-          break;
+          throw new Error('Kode bayar sudah terpakai');
 
         case RC.RC51:
-          toast.update(toastId, {
-            autoClose: 5000,
-            type: 'error',
-            render: 'Kode bayar sudah tidak berlaku',
-          });
-          break;
+          throw new Error('Kode bayar sudah tidak berlaku');
 
         case RC.RC52:
-          toast.update(toastId, {
-            autoClose: 5000,
-            type: 'error',
-            render: 'Kode bayar tidak ditemukan',
-          });
-          break;
+          throw new Error('Kode bayar tidak ditemukan');
 
         default:
-          toast.update(toastId, {
-            autoClose: 5000,
-            type: 'error',
-            render:
-              'Terjadi kesalahan saat pengecekan kode bayar, tolong dicoba lagi dan pastikan kode bayar sudah sesuai',
-          });
-          break;
+          throw new Error(
+            'Terjadi kesalahan saat pengecekan kode bayar, tolong dicoba lagi dan pastikan kode bayar sudah sesuai'
+          );
       }
     } catch (error) {
       if (error instanceof Error) {

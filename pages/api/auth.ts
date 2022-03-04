@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { AuthResult } from '../../libs';
+import type { AuthResult } from '../../libs';
 
 const OMNI_URL = process.env.NEXT_PUBLIC_OMNI_URL;
 const OMNI_USERNAME = process.env.OMNI_USERNAME;
