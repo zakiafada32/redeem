@@ -155,6 +155,7 @@ export const getStaticProps: GetStaticProps<{ token: Token }> = async context =>
     props: {
       token,
     },
+    revalidate: 10,
   };
 };
 
