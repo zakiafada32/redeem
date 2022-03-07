@@ -1,9 +1,8 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Layout } from '../component';
 
 import styles from '../styles/Unexpected.module.css';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Custom404: React.FC = () => (
   <Layout>
@@ -12,7 +11,9 @@ const Custom404: React.FC = () => (
       <h1>Oops!</h1>
       <h3>Something Unexpected happen.</h3>
       <h3>We&apos;re working on it</h3>
-      <a href={BASE_URL}>Please Try Again</a>
+      <Link href="/">
+        <a>Please Try Again</a>
+      </Link>
     </section>
   </Layout>
 );

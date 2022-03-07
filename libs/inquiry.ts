@@ -1,4 +1,3 @@
-const OMNI_URL = process.env.NEXT_PUBLIC_OMNI_URL;
 export interface InquiryResult {
   code: number;
   result: {
@@ -33,13 +32,12 @@ export interface InquiryResult {
   };
 }
 
-export const inquiry = async (token: string, paymentCode: string): Promise<InquiryResult> => {
+export const inquiry = async (paymentCode: string): Promise<InquiryResult> => {
   try {
-    const response = await fetch(OMNI_URL + '/api/v1/payment/inquiry/', {
+    const response = await fetch('api/inquiry/', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        Authorization: 'Token ' + token,
       },
       body: JSON.stringify({
         payment_code: paymentCode,

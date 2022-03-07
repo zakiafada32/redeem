@@ -2,15 +2,15 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Layout } from '../component';
-import { auth, inquiry, checkout, ResponseCode as RC } from '../libs';
+import { inquiry, checkout, ResponseCode as RC } from '../libs';
 
 import type { FormEventHandler } from 'react';
-import type { GetStaticProps, NextPage } from 'next';
-import type { Token, Summary, CheckoutParams } from '../libs';
+import type { NextPage } from 'next';
+import type { Summary, CheckoutParams } from '../libs';
 
 import styles from '../styles/Redeem.module.css';
 
-const Redeem: NextPage<{ token: Token }> = ({ token }) => {
+const Redeem: NextPage = () => {
   const [paymentCode, setPaymentCode] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -22,9 +22,9 @@ const Redeem: NextPage<{ token: Token }> = ({ token }) => {
     event.preventDefault();
     const toastId = toast.info('tunggu sebentar . . .');
     try {
-      const inquiryResult = await inquiry(token, paymentCode);
+      const inquiryResult = await inquiry(paymentCode);
       if (inquiryResult.code !== 200) {
-        throw new Error('Terjadi kesalahan, tolong dicoba lagi');
+        throw new Error('Terjadi kesalahan, mohon dicoba lagi');
       }
 
       switch (inquiryResult.result.data.status.code) {
@@ -39,14 +39,14 @@ const Redeem: NextPage<{ token: Token }> = ({ token }) => {
             expiration: inquiryResult.result.data.data?.expiry_time!,
           };
 
-          const checkoutResult = await checkout(token, checkoutParams);
+          const checkoutResult = await checkout(checkoutParams);
 
           if (checkoutResult.code !== 200) {
-            throw new Error('Terjadi kesalahan, tolong dicoba lagi');
+            throw new Error('Terjadi kesalahan, mohon dicoba lagi');
           }
 
           if (!checkoutResult.result?.payment_link || checkoutResult.result.payment_link === '') {
-            throw new Error(checkoutResult.result?.message);
+            throw new Error(checkoutResult.result?.message ?? 'Terjadi kesalahan, mohon dicoba lagi');
           }
 
           setSummary({
@@ -72,16 +72,14 @@ const Redeem: NextPage<{ token: Token }> = ({ token }) => {
           throw new Error('Kode bayar tidak ditemukan');
 
         default:
-          throw new Error(
-            'Terjadi kesalahan saat pengecekan kode bayar, tolong dicoba lagi dan pastikan kode bayar sudah sesuai'
-          );
+          throw new Error('Terjadi kesalahan, mohon dicoba lagi dan pastikan kode bayar sudah sesuai');
       }
     } catch (error) {
       if (error instanceof Error) {
         toast.update(toastId, { autoClose: 5000, type: 'error', render: error.message });
         return;
       }
-      toast.update(toastId, { autoClose: 5000, type: 'error', render: 'Terjadi kesalahan, tolong dicoba lagi' });
+      toast.update(toastId, { autoClose: 5000, type: 'error', render: 'Terjadi kesalahan, mohon dicoba lagi' });
     }
   };
 
@@ -142,22 +140,6 @@ const Redeem: NextPage<{ token: Token }> = ({ token }) => {
       </section>
     </Layout>
   );
-};
-
-export const getStaticProps: GetStaticProps<{ token: Token }> = async context => {
-  const token = await auth();
-  if (!token || token === '') {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      token,
-    },
-    revalidate: 12 * 60 * 60, // revalidate every 12 hours (h * m * s)
-  };
 };
 
 export default Redeem;

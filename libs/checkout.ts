@@ -1,5 +1,3 @@
-const OMNI_URL = process.env.NEXT_PUBLIC_OMNI_URL;
-
 export interface CheckoutResult {
   code: number;
   result?: {
@@ -19,13 +17,12 @@ export interface CheckoutParams {
   expiration: string;
 }
 
-export const checkout = async (token: string, params: CheckoutParams): Promise<CheckoutResult> => {
+export const checkout = async (params: CheckoutParams): Promise<CheckoutResult> => {
   try {
-    const response = await fetch(OMNI_URL + '/api/v1/payment/checkout/', {
+    const response = await fetch('api/checkout/', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        Authorization: 'Token ' + token,
       },
       body: JSON.stringify(params),
     });
