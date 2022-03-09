@@ -17,9 +17,11 @@ const Redeem: NextPage = () => {
 
   const [summary, setSummary] = useState<Summary>();
   const [step, setStep] = useState(0);
+  const [disable, setDisable] = useState(false);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async event => {
     event.preventDefault();
+    setDisable(true);
     const toastId = toast.info('tunggu sebentar . . .');
     try {
       const inquiryResult = await inquiry(paymentCode);
@@ -75,6 +77,7 @@ const Redeem: NextPage = () => {
           throw new Error('Terjadi kesalahan, mohon dicoba lagi dan pastikan kode bayar sudah sesuai');
       }
     } catch (error) {
+      setDisable(false);
       if (error instanceof Error) {
         toast.update(toastId, { autoClose: 5000, type: 'error', render: error.message });
         return;
@@ -106,7 +109,9 @@ const Redeem: NextPage = () => {
             <input type="text" value={name} onChange={e => setName(e.target.value)} />
             <code>Masukkan nama untuk menjadi bagian dari komunitas gaming Gamefinity</code>
 
-            <button type="submit">Lanjutkan</button>
+            <button type="submit" disabled={disable}>
+              Lanjutkan
+            </button>
           </form>
         ) : (
           <article className={styles.summary}>

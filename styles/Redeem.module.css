@@ -45,6 +45,11 @@
   font-size: 1em;
 }
 
+.form button:disabled,
+.form button[disabled] {
+  opacity: 0.5;
+}
+
 .summary {
   display: flex;
   flex: 1;
