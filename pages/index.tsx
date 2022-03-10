@@ -100,7 +100,12 @@ const Redeem: NextPage = () => {
         {step === 0 ? (
           <form onSubmit={handleSubmit} className={styles.form}>
             <label>Masukkan Kode Bayar</label>
-            <input type="number" value={paymentCode} onChange={e => setPaymentCode(e.target.value)} required />
+            <input
+              type="number"
+              value={paymentCode}
+              onChange={e => setPaymentCode(e.target.value.slice(0, 12))}
+              required
+            />
 
             <label>Alamat Email</label>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
