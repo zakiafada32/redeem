@@ -55,7 +55,8 @@ const Redeem: NextPage = () => {
             name: name,
             email: email,
             paymentLink: checkoutResult.result?.payment_link!,
-            description: inquiryResult.result.data.data?.description!,
+            description:
+              inquiryResult.result.data.data?.description ?? inquiryResult.result.data.data?.allowance_description!,
             phone: inquiryResult.result.data.data?.phone!,
             expiration: inquiryResult.result.data.data?.expiry_time!,
           });
