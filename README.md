@@ -1,4 +1,4 @@
-### Redeem page
+# Redeem page
 
 ## Getting Started
 
