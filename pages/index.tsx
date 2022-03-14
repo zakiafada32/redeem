@@ -28,7 +28,7 @@ const Redeem: NextPage = () => {
       if (inquiryResult.code !== 200) {
         throw new Error('Terjadi kesalahan, mohon dicoba lagi');
       }
-
+      console.log('inquiryResult ', inquiryResult);
       switch (inquiryResult.result.data.status.code) {
         case RC.RC00:
           const checkoutParams: CheckoutParams = {
